@@ -126,6 +126,11 @@ player_rect = player_surface.get_rect(center=(0, 220))  # Takes a surface and dr
 player_surface_scaled = pygame.transform.scale(player_surface, (350, 200))  # Creates the image for the game over screen
 player_surface_scaled_rect = player_surface_scaled.get_rect(center=(400, 160))
 
+extra_life_surface = pygame.image.load('Item 3-1.png.png').convert_alpha()  # Imports the extra life icon
+extra_life_x_position = random.randint(2500, 4800)
+extra_life_y_position = random.randint(0, 350)
+extra_life_rect = extra_life_surface.get_rect(center=(extra_life_x_position, extra_life_y_position))  # Creates the rectangle for the extra life icon
+
 object_rect_list = [lava_rect, lava_2_rect, baren_rect, baren_2_rect, black_hole_rect, black_hole_2_rect, ice_rect, ice_2_rect, terran_rect, terran_2_rect]
 
 game_active = False
@@ -135,6 +140,12 @@ game_active = False
 death_sound = pygame.mixer.Sound('videogame-death-sound-43894.mp3')
 move_sound = pygame.mixer.Sound('sfx_jump_07-80241.mp3')
 hit_sound = pygame.mixer.Sound('vibrating-thud-39536.mp3')
+collect_sound = pygame.mixer.Sound('video-game-powerup-38065.mp3')
+
+move_sound.set_volume(0.3)
+death_sound.set_volume(0.7)
+hit_sound.set_volume(1.0)
+collect_sound.set_volume(0.4)
 
 while True:  # Main game loop
 
@@ -186,6 +197,7 @@ while True:  # Main game loop
 
                     mixer.music.load('2019-12-11_-_Retro_Platforming_-_David_Fesliyan.mp3')  # Loads the game music
                     pygame.mixer.music.play(-1)  # Plays the game music on loop
+                    pygame.mixer.music.set_volume(0.5)
 
                     game_active = True
 
@@ -235,6 +247,11 @@ while True:  # Main game loop
 
                     terran_2_rect.left = random.randint(900, 1600)
                     terran_2_rect.y = random.randint(0, 350)
+
+                    ####
+
+                    extra_life_rect.left = random.randint(2500, 4800)
+                    extra_life_rect.y = random.randint(0, 350)
 
     if game_active:
 
@@ -326,6 +343,14 @@ while True:  # Main game loop
             terran_2_rect.y = random.randint(0, 350)
         screen.blit(game_enemy_terran_2, terran_2_rect)
 
+        ####
+
+        extra_life_rect.x -= 3
+        if extra_life_rect.right < -100:
+            extra_life_rect.left = random.randint(2500, 4800)
+            extra_life_rect.y = random.randint(0, 350)
+        screen.blit(extra_life_surface, extra_life_rect)
+
         for rect in object_rect_list:
 
             if player_rect.colliderect(rect): # Checks if there is a collision between the player rect and the planet rect
@@ -336,6 +361,15 @@ while True:  # Main game loop
 
                 rect.left = random.randint(900, 1600)
                 rect.y = random.randint(0, 350)
+
+            elif player_rect.colliderect(extra_life_rect):
+
+                lives += 1
+
+                collect_sound.play()
+
+                extra_life_rect.left = random.randint(2500, 4800)
+                extra_life_rect.y = random.randint(0, 350)
 
             if lives == 0:
 
