@@ -137,10 +137,10 @@ game_active = False
 
 # Game Sounds
 
-death_sound = pygame.mixer.Sound('videogame-death-sound-43894.mp3')
-move_sound = pygame.mixer.Sound('sfx_jump_07-80241.mp3')
-hit_sound = pygame.mixer.Sound('vibrating-thud-39536.mp3')
-collect_sound = pygame.mixer.Sound('video-game-powerup-38065.mp3')
+death_sound = pygame.mixer.Sound('audio/videogame-death-sound-43894.mp3')
+move_sound = pygame.mixer.Sound('audio/sfx_jump_07-80241.mp3')
+hit_sound = pygame.mixer.Sound('audio/vibrating-thud-39536.mp3')
+collect_sound = pygame.mixer.Sound('audio/video-game-powerup-38065.mp3')
 
 move_sound.set_volume(0.3)
 death_sound.set_volume(0.7)
@@ -195,7 +195,7 @@ while True:  # Main game loop
 
                     lives = 3
 
-                    mixer.music.load('2019-12-11_-_Retro_Platforming_-_David_Fesliyan.mp3')  # Loads the game music
+                    mixer.music.load('audio/2019-12-11_-_Retro_Platforming_-_David_Fesliyan.mp3')  # Loads the game music
                     pygame.mixer.music.play(-1)  # Plays the game music on loop
                     pygame.mixer.music.set_volume(0.5)
 
